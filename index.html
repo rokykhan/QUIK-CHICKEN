@@ -1,0 +1,1299 @@
+<!-- ***************************************************
+********************************************************
+
+HOW TOasdf USE: Use these code examples as a guideliasdfne for formatting your HTML email. You may want to create your own template based on these snippets or just pick and choose the ones that fix your specific rendering issue(s). There are two main areas in the template: 1. The header (head) area of the document. You will find global styles, where indicated, to move inline. 2. The body section contains more specific fixes and guidance to use where needed in your design.
+
+DO NOT COPY OVER COMMENTS AND INSTRUCTIONS WITH THE CODE to your message or risk spam box banishment :).
+
+It is important to note that sometimes the styles in the header area should not be or don't need to be brought inline. Those instances will be marked accordingly in the comments.
+
+********************************************************
+**************************************************** -->
+
+<!-- Using the xHTML doctype is a good practice when sending HTML email. While not the only doctype you can use, it seems to have the least inconsistencies. For more information on which one may work best for you, check out the resources below.
+
+UPDATED: Now using xHTML strict based on the fact that gmail and hotmail uses it.  Find out more about that, and another great boilerplate, here: http://www.emailology.org/#1
+
+More info/Reference on doctypes in email:
+Campaign Monitor - http://www.campaignmonitor.com/blog/post/3317/correct-doctype-to-use-in-html-email/
+Email on Acid - https://www.emailonacid.com/blog/article/email-development/doctype_-_the_black_sheep_of_html_email_design/
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Your Message Subject or Title</title>
+	<style type="text/css">
+
+		/***********
+		Originally based on The MailChimp Reset from Fabio Carneiro, MailChimp User Experience Design
+		More info and templates on Github: https://github.com/mailchimp/Email-Blueprints
+		http://www.mailchimp.com &amp; http://www.fabio-carneiro.com
+
+		INLINE: No.
+		***********/
+		/* Client-specific Styles */
+		#outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+		body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+		/* Prevent Webkit and Windows Mobile platforms from changing default font sizes, while not breaking desktop design. */
+		.ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing. */
+		#backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+		/* End reset */
+
+		/* Some sensible defaults for images
+		1. "-ms-interpolation-mode: bicubic" works to help ie properly resize images in IE. (if you are resizing them using the width and height attributes)
+		2. "border:none" removes border when linking images.
+		3. Updated the common Gmail/Hotmail image display fix: Gmail and Hotmail unwantedly adds in an extra space below images when using non IE browsers. You may not always want all of your images to be block elements. Apply the "image_fix" class to any image you need to fix.
+
+		Bring inline: Yes.
+		*/
+		img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+		a img {border:none;}
+		.image_fix {display:block;}
+
+		/** Yahoo paragraph fix: removes the proper spacing or the paragraph (p) tag. To correct we set the top/bottom margin to 1em in the head of the document. Simple fix with little effect on other styling. NOTE: It is also common to use two breaks instead of the paragraph tag but I think this way is cleaner and more semantic. NOTE: This example recommends 1em. More info on setting web defaults: http://www.w3.org/TR/CSS21/sample.html or http://meiert.com/en/blog/20070922/user-agent-style-sheets/
+
+		Bring inline: Yes.
+		**/
+		p {margin: 1em 0;}
+
+		/** Hotmail header color reset: Hotmail replaces your header color styles with a green color on H2, H3, H4, H5, and H6 tags. In this example, the color is reset to black for a non-linked header, blue for a linked header, red for an active header (limited support), and purple for a visited header (limited support).  Replace with your choice of color. The !important is really what is overriding Hotmail's styling. Hotmail also sets the H1 and H2 tags to the same size.
+
+		Bring inline: Yes.
+		**/
+		h1, h2, h3, h4, h5, h6 {color: black !important;}
+
+		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: blue !important;}
+
+		h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {
+			color: red !important; /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
+		 }
+
+		h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+			color: purple !important; /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */
+		}
+
+		/** Outlook 07, 10 Padding issue: These "newer" versions of Outlook add some padding around table cells potentially throwing off your perfectly pixeled table.  The issue can cause added space and also throw off borders completely.  Use this fix in your header or inline to safely fix your table woes.
+
+		More info: http://www.ianhoar.com/2008/04/29/outlook-2007-borders-and-1px-padding-on-table-cells/
+		http://www.campaignmonitor.com/blog/post/3392/1px-borders-padding-on-table-cells-in-outlook-07/
+
+		H/T @edmelly
+
+		Bring inline: No.
+		**/
+		table td {border-collapse: collapse;}
+
+		/** Remove spacing around Outlook 07, 10 tables
+
+		More info : http://www.campaignmonitor.com/blog/post/3694/removing-spacing-from-around-tables-in-outlook-2007-and-2010/
+
+		Bring inline: Yes
+		**/
+		table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+
+		/* Styling your links has become much simpler with the new Yahoo.  In fact, it falls in line with the main credo of styling in email, bring your styles inline.  Your link colors will be uniform across clients when brought inline.
+
+		Bring inline: Yes. */
+		a {color: orange;}
+
+		/* Or to go the gold star route...
+		a:link { color: orange; }
+		a:visited { color: blue; }
+		a:hover { color: green; }
+		*/
+
+		/***************************************************
+		****************************************************
+		MOBILE TARGETING
+
+		Use @media queries with care.  You should not bring these styles inline -- so it's recommended to apply them AFTER you bring the other stlying inline.
+
+		Note: test carefully with Yahoo.
+		Note 2: Don't bring anything below this line inline.
+		****************************************************
+		***************************************************/
+
+		/* NOTE: To properly use @media queries and play nice with yahoo mail, use attribute selectors in place of class, id declarations.
+		table[class=classname]
+		Read more: http://www.campaignmonitor.com/blog/post/3457/media-query-issues-in-yahoo-mail-mobile-email/
+		*/
+		@media only screen and (max-device-width: 480px) {
+
+			/* A nice and clean way to target phone numbers you want clickable and avoid a mobile phone from linking other numbers that look like, but are not phone numbers.  Use these two blocks of code to "unstyle" any numbers that may be linked.  The second block gives you a class to apply with a span tag to the numbers you would like linked and styled.
+
+			Inspired by Campaign Monitor's article on using phone numbers in email: http://www.campaignmonitor.com/blog/post/3571/using-phone-numbers-in-html-email/.
+
+			Step 1 (Step 2: line 224)
+			*/
+			a[href^="tel"], a[href^="sms"] {
+						text-decoration: none;
+						color: black; /* or whatever your want */
+						pointer-events: none;
+						cursor: default;
+					}
+
+			.mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+						text-decoration: default;
+						color: orange !important; /* or whatever your want */
+						pointer-events: auto;
+						cursor: default;
+					}
+		}
+
+		/* More Specific Targeting */
+
+		@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+			/* You guessed it, ipad (tablets, smaller screens, etc) */
+
+			/* Step 1a: Repeating for the iPad */
+			a[href^="tel"], a[href^="sms"] {
+						text-decoration: none;
+						color: blue; /* or whatever your want */
+						pointer-events: none;
+						cursor: default;
+					}
+
+			.mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+						text-decoration: default;
+						color: orange !important;
+						pointer-events: auto;
+						cursor: default;
+					}
+		}
+
+		@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+			/* Put your iPhone 4g styles in here */
+		}
+
+		/* Following Android targeting from:
+		http://developer.android.com/guide/webapps/targeting.html
+		http://pugetworks.com/2011/04/css-media-queries-for-targeting-different-mobile-devices/  */
+		@media only screen and (-webkit-device-pixel-ratio:.75){
+			/* Put CSS for low density (ldpi) Android layouts in here */
+		}
+		@media only screen and (-webkit-device-pixel-ratio:1){
+			/* Put CSS for medium density (mdpi) Android layouts in here */
+		}
+		@media only screen and (-webkit-device-pixel-ratio:1.5){
+			/* Put CSS for high density (hdpi) Android layouts in here */
+		}
+		/* end Android targeting */
+	</style>
+
+	<!-- Targeting Windows Mobile -->
+	<!--[if IEMobile 7]>
+	<style type="text/css">
+
+	</style>
+	<![endif]-->
+
+	<!-- ***********************************************
+	****************************************************
+	END MOBILE TARGETING
+	****************************************************
+	************************************************ -->
+
+	<!--[if gte mso 9]>
+	<style>
+		/* Target Outlook 2007 and 2010 */
+	</style>
+	<![endif]-->
+</head>
+<body style="background-color: #f1f1f1;">
+	<!-- Wrapper/Container Table: Use a wrapper table to control the width and the background color consistently of your email. Use this approach instead of setting attributes on the body tag. -->
+	<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
+	<tr>
+		<td>
+			<!-- code start here  -->
+
+		<!-- header table start -->
+		
+		<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" >
+			<!-- tr start -->
+			<tr>
+				<td valign="top" width="100%" align="center" style="padding: 30px 40px;background-color: #ffff;">
+					<h1 style="margin: 0;">
+						<a href="#" style="text-decoration: none;
+    color: black !important;
+    text-transform: uppercase;
+    font-size: 25px;
+    font-family: sans-serif;">Quik Chicken</a>
+
+					</h1>
+				</td>
+					
+
+				
+			</tr>
+			<!-- tr end -->
+		
+			
+			
+		</table>
+		<!-- header table end -->
+
+		<!-- banner start -->
+		<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" >
+			<!-- tr start -->
+			<tr>
+				<td valign="middle" align="center" width="100%"  style="background-image: url(https://i.postimg.cc/DzGFdN7c/bg-1.jpg);
+    background-size: cover;
+    height: 400px;">
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+			
+						<tr>
+							<td valign="top" width="100%" align="center" style="padding: 0px 35px; " >
+					
+							<h1 style="color: #fff !important;font-size: 28px;margin-top: 0;margin-bottom: 30px;font-family: sans-serif;">We Serve Healthy & Delicious Foods</h1>
+
+							<span style="display: block;margin: 15px 0;color: #fff;font-size: 15px;font-family: sans-serif;line-height: 25px;
+    font-weight: 400;">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</span>
+
+							<span><a href="#" style="background: #f3a333;color: #fff;padding: 10px 15px;border-radius: 30px; 
+							text-decoration: none;font-size: 15px;font-family: sans-serif;font-weight: 400;	display: inline-block;">Get Your Order Here!</a></span>
+
+							</td>
+					
+
+				
+						</tr>
+			
+					</table>
+					
+				</td>
+				
+			</tr>
+			
+		</table>
+
+
+		<!-- banner end -->
+			<!-- welcome section start -->
+				<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="background: #333333;padding: 40px; display: block;" >
+			
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<span style="font-size: 16px;
+    font-family: sans-serif; color: rgba(225, 225, 255, .4);
+    margin-bottom: 5px;display: block;">WELCOME</span>
+				</td>
+
+				</tr>
+				<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<h1 style="color: #fff !important;font-family: sans-serif; margin-bottom: 20px;">Welcome To QUIK CHICKEN</h1>
+				</td>
+				</tr>
+				<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<span style="font-size: 15px;font-family: sans-serif;color: #fff;line-height: 30px;margin: 10px 0;display: block;
+">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</span>
+				</td>	
+
+				
+			</tr>
+		
+		</table>
+
+
+			<!-- welcome section end -->
+			<!-- services section start  -->
+			<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="display: block;padding: 40px;
+			background-color: #ffff;">
+			
+		
+
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<span style="font-size: 15px;font-family: sans-serif;font-weight: 400;color: rgba(0,0,0,.4);text-transform: uppercase;
+    letter-spacing: 3px;margin-bottom: 5px;display: block;">SERVICES</span>
+				</td>
+					
+
+				
+			</tr>
+
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<h1 style="font-family: sans-serif;line-height: 25px;margin-bottom: 25px;">Our Services</h1>
+				</td>
+					
+
+				
+			</tr>
+
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<span style="font-size: 16px;font-family: sans-serif;word-spacing: 2px;color: rgba(0,0,0,.6);line-height: 25px;">A small river named Duden flows by their place and supplies it with the necessary regelialia.</span>
+				</td>
+					
+
+				
+			</tr>
+
+
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<table  cellpadding="10" cellspacing="0" border="0" align="center" width="100%" style="margin-top: 25px;">
+
+						<tr>
+							<td valign="top" width="50%" align="center" style="">
+
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+									<tr>
+										<td valign="top" width="100%" align="center" style=""><img src="https://i.postimg.cc/Gh8pkGCd/001-diet.png" alt="" style="width: 60px;height: auto;display: block;"></td>
+									</tr>
+								</table>
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+									<tr>
+										<td valign="top" width="100%" align="center" style=""><h3 style="font-size: 20px;
+										font-family: sans-serif;margin-bottom: 20px;">Healthy Foods</h3></td>
+									</tr>
+									<tr>
+										<td valign="top" width="100%" align="center" style=""><span style="font-size: 15px;font-family: sans-serif;color: rgba(0,0,0,.5);line-height: 25px;
+    										margin: 10px 0; display: block;">Far far away, behind the word mountains, far from the countries</span></td>
+									</tr>
+								</table>
+							</td>
+							<td valign="top" width="50%" align="center" style="">
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+									<tr>
+										<td valign="top" width="100%" align="center" style=""><img src="https://i.postimg.cc/NjxLMYtH/003-recipe-book.png" alt="" style="width: 60px;height: auto;display: block;"></td>
+									</tr>
+								</table>
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+									<tr>
+										<td valign="top" width="100%" align="center" style=""><h3 style=""><h3 style="font-size: 20px;
+										font-family: sans-serif;margin-bottom: 20px;">Original Recipes</h3></td>
+									</tr>
+									<tr>
+										<td valign="top" width="100%" align="center" style="">
+											<span style="font-size: 15px;font-family: sans-serif;color: rgba(0,0,0,.5);line-height: 25px;
+    										margin: 10px 0; display: block;">Far far away, behind the word mountains, far from the countries</span></td>
+									</tr>
+								</table>
+
+							</td>
+						</tr>
+
+					</table>
+				</td>
+					
+
+				
+			</tr>
+		
+		</table>
+
+
+
+			<!-- services section end  -->
+			<!-- video section start -->
+			<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="background-color: #fafafa;padding: 40px;
+    		display: block;" >
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<a href="#"><img style="width: 100%;" src="https://i.postimg.cc/d0rQx4vm/screencapture-colorlib-etc-email-template-1-index-html-2023-11-01-23-18-48.png" alt=""></a>
+				</td>
+				
+			</tr>
+			<tr>
+				<td valign="top" width="100%" align="center" style="padding-top: 20px;">
+					<h2 style="font-family: sans-serif;">Watch Our Video</h2>
+				</td>
+				
+			</tr>
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<span style="font-family: sans-serif;font-size: 15px;line-height: 25px;color: rgba(0,0,0,.4);margin: 15px 0;
+    display: block;">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</span>
+				</td>
+				
+			</tr>		
+</table>
+
+			<!-- video section end -->
+			<!-- menu section start -->
+		<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="    background-color: #fff;padding: 40px;
+    display: block;" >
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+								<span style="font-size: 15px;font-family: sans-serif;font-weight: 400;color: rgba(0,0,0,.4);
+								text-transform: uppercase;letter-spacing: 3px;margin-bottom: 5px;display: block;">MENU</span>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+								<h1 style="font-family: sans-serif;line-height: 25px;margin-bottom: 25px;">Our Delicious Food</h1>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+								<span style="font-size: 16px;font-family: sans-serif;word-spacing: 2px;color: rgba(0,0,0,.6);
+								line-height: 25px;">A small river named Duden flows by their place and supplies it with the necessary regelialia.</span>
+							</td>
+						</tr>
+					</table>
+				</td>
+				
+			</tr>
+
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+
+
+					<!-- 3nd table start -->
+		<table cellpadding="10" cellspacing="0" border="0" align="center" width="100%" >
+			<!-- tr start -->
+			<tr>
+				<td valign="top" width="50%" style="">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="" style="">
+						<tr>
+							<td valign="top" align="center">
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="">
+									<tr>
+										<td>
+											<img src="https://i.postimg.cc/rFhHtPzn/12.png" style="width: 100%;" alt="">
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+
+					</table>
+					<table cellpadding="0" cellspacing="0" border="0" align="left" width="100%" style="padding: 10px 10px 0;display: block;" >
+						<tr>
+							<td valign="top" width="100%" align="left" style="" >
+								<h3 style="margin-top: 6px;font-size: 20px;font-family: sans-serif;">Pasta, Sauce Milk</h3>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top" width="100%" align="left" style="" >
+								<span style="font-family: sans-serif;font-size: 15px;line-height: 25px;
+    color: rgba(0,0,0,.4);margin: 15px 0;display: block;">Far far away, behind the word mountains, far from the countries</span>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top" width="100%" align="left" style="" >
+								<span><a href="#" style="border-radius: 30px;background: #f3a333;color: #ffffff;text-decoration: none;
+								padding: 10px 15px;display: inline-block;">Read more</a></span>
+							</td>
+						</tr>
+					</table>
+
+				</td>
+				<td valign="top" align="center" width="50%" style="">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="" style="">
+						<tr>
+							<td valign="top" align="center">
+								<img src="https://i.postimg.cc/rFhHtPzn/12.png" alt="" style=" width: 100%;">
+							</td>
+						</tr>
+
+					</table>
+					<table cellpadding="0" cellspacing="0" border="0" align="left" width="100%" style="padding: 10px 10px 0;display: block;">
+						<tr>
+							<td valign="top" width="100%" align="left" style="" >
+								<h3 style="margin-top: 6px;font-size: 20px;font-family: sans-serif;">Sweetened Fruits</h3>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top" width="100%" align="left" style="" >
+								<span style="font-family: sans-serif;font-size: 15px;line-height: 25px;
+    color: rgba(0,0,0,.4);margin: 15px 0;    display: block;">Far far away, behind the word mountains, far from the countries</span>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top" width="100%" align="left" style="" >
+								<span><a href="#" style="border-radius: 30px;background: #f3a333;color: #ffffff;text-decoration: none;
+								padding: 10px 15px;display: inline-block;">Read more</a></span>
+							</td>
+						</tr>
+					</table>
+				</td>
+								
+			</tr>
+			<!-- tr end -->
+				
+		</table>
+		<!-- 3st table end -->
+
+
+				</td>
+				
+			</tr>		
+		</table>
+
+			<!-- menu section end -->
+
+			<!-- ditels start -->
+			<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" >
+			<tr>
+				<td valign="middle" width="100%" align="center" style="">
+					
+					<!-- 1st table -->
+					
+		<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+			<!-- tr start -->
+			<tr>
+				<td valign="middle" width="50%" style=" background-color: #fafafa;">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="middle" align="center">
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="padding: 30px;    display: block;" >
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+										<span style="font-family: sans-serif;font-size: 15px;color: rgba(0,0,0,.4);letter-spacing: 2px;
+    										margin-bottom: 15px;display: block;margin-top: 5px;">BREAKFAST</span>		
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+										<h2 style="margin-top: 0;font-size: 22px;font-family: sans-serif;font-weight: 700;line-height: 30px;">Grilled Beef with potatoes</h2>		
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+											<span style="font-family: sans-serif;font-size: 15px;font-weight: 400;color: rgba(0,0,0,.4);
+                                            line-height: 25px; margin: 10px 0;display: block;"	>A small river named Duden flows by their place and supplies it with the necessary regelialia.</span>	
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+											<span> <a href="" style="font-size: 15px;font-family: sans-serif;color: #fff;background: #f3a333;
+    											text-decoration: none;text-transform: capitalize;padding: 10px 15px;border-radius: 30px;
+    											display: inline-block;">read more</a></span>	
+									</td>
+											
+								</tr>		
+							</table>
+							</td>
+						</tr>
+
+					</table>
+				
+
+				</td>
+				<td valign="top" width="50%" style="">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="middle" align="center">
+								<img src="https://i.postimg.cc/Kjj3Ft00/bg-3.jpg" alt="" style="width: 100%;display: block;">
+							</td>
+						</tr>
+
+					</table>
+					
+				</td>
+								
+			</tr>
+			<!-- tr end -->			
+			
+		</table>
+		<!-- 3st table end -->
+					<!-- 1st table -->
+
+				</td>
+									
+			</tr>	
+
+			<tr>
+				<td valign="middle" width="100%" align="center" style="">
+					
+					<!-- 1st table -->
+					
+		<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+			<!-- tr start -->
+			<tr>
+				<td valign="top" width="50%" style="">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="middle" align="center">
+								<img src="https://i.postimg.cc/2SqdYdgV/bg-4.jpg" alt="" style="width: 100%;display: block;">
+							</td>
+						</tr>
+
+					</table>
+					
+				</td>
+
+				<td valign="middle" width="50%" style=" background-color: #fafafa;">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="middle" align="center">
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="padding: 30px;    display: block;" >
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+										<span style="font-family: sans-serif;font-size: 15px;color: rgba(0,0,0,.4);letter-spacing: 2px;
+    										margin-bottom: 15px;display: block;margin-top: 5px;">LUNCH</span>		
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+										<h2 style="margin-top: 0;font-size: 22px;font-family: sans-serif;font-weight: 700;line-height: 30px;">Grilled Beef with potatoes</h2>		
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+											<span style="font-family: sans-serif;font-size: 15px;font-weight: 400;color: rgba(0,0,0,.4);
+                                            line-height: 25px; margin: 10px 0;display: block;"	>A small river named Duden flows by their place and supplies it with the necessary regelialia.</span>	
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+											<span> <a href="" style="font-size: 15px;font-family: sans-serif;color: #fff;background: #f3a333;
+    											text-decoration: none;text-transform: capitalize;padding: 10px 15px;border-radius: 30px;
+    											display: inline-block;">read more</a></span>	
+									</td>
+											
+								</tr>		
+							</table>
+
+							</td>
+						</tr>
+
+					</table>
+				</td>				
+								
+			</tr>
+
+			<tr>
+				<td valign="middle" width="50%" style=" background-color: #fafafa;">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="middle" align="center">
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="padding: 30px;    display: block;" >
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+										<span style="font-family: sans-serif;font-size: 15px;color: rgba(0,0,0,.4);letter-spacing: 2px;
+    										margin-bottom: 15px;display: block;margin-top: 5px;">DINNER</span>		
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+										<h2 style="margin-top: 0;font-size: 22px;font-family: sans-serif;font-weight: 700;line-height: 30px;">Grilled Beef with potatoes</h2>		
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+											<span style="font-family: sans-serif;font-size: 15px;font-weight: 400;color: rgba(0,0,0,.4);
+                                            line-height: 25px; margin: 10px 0;display: block;"	>A small river named Duden flows by their place and supplies it with the necessary regelialia.</span>	
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+											<span> <a href="" style="font-size: 15px;font-family: sans-serif;color: #fff;background: #f3a333;
+    											text-decoration: none;text-transform: capitalize;padding: 10px 15px;border-radius: 30px;
+    											display: inline-block;">read more</a></span>	
+									</td>
+											
+								</tr>		
+							</table>
+
+							</td>
+						</tr>
+
+					</table>
+				
+				</td>
+				<td valign="top" width="50%" style="">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="middle" align="center">
+								<img src="https://i.postimg.cc/8cLvsDL3/bg-6.jpg" alt="" style="width: 100%;display: block;">
+							</td>
+						</tr>
+
+					</table>
+					
+				</td>
+								
+			</tr>
+			<!-- tr end -->			
+		</table>
+		<!-- 3st table end -->
+					<!-- 1st table -->
+
+				</td>
+								
+			</tr>	
+
+			<tr>
+				<td valign="middle" width="100%" align="center" style="">
+					
+					<!-- 1st table -->
+					
+		<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+			<!-- tr start -->
+			<tr>
+				<td valign="top" width="50%" style="">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="middle" align="center">
+								<img src="https://i.postimg.cc/YS2zV4QS/bg-5.jpg" alt="" style="width: 100%;display: block;">
+							</td>
+						</tr>
+
+					</table>
+					
+				</td>
+				<td valign="middle" width="50%" style=" background-color: #fafafa;">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="middle" align="center">
+								<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="padding: 30px;    display: block;" >
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+										<span style="font-family: sans-serif;font-size: 15px;color: rgba(0,0,0,.4);letter-spacing: 2px;
+    										margin-bottom: 15px;display: block;margin-top: 5px;">DESSERT</span>		
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+										<h2 style="margin-top: 0;font-size: 22px;font-family: sans-serif;font-weight: 700;line-height: 30px;">Grilled Beef with potatoes</h2>		
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+											<span style="font-family: sans-serif;font-size: 15px;font-weight: 400;color: rgba(0,0,0,.4);
+                                            line-height: 25px; margin: 10px 0;display: block;"	>A small river named Duden flows by their place and supplies it with the necessary regelialia.</span>	
+									</td>
+											
+								</tr>
+								<tr>
+									<td valign="middle" width="100%" align="left" style="">
+											<span> <a href="" style="font-size: 15px;font-family: sans-serif;color: #fff;background: #f3a333;
+    											text-decoration: none;text-transform: capitalize;padding: 10px 15px;border-radius: 30px;
+    											display: inline-block;">read more</a></span>	
+									</td>
+											
+								</tr>		
+							</table>
+
+							</td>
+						</tr>
+
+					</table>
+				
+
+				</td>
+				
+								
+			</tr>
+
+			<!-- tr end -->	
+		</table>
+		<!-- 3st table end -->
+					<!-- 1st table -->
+
+				</td>
+			
+			</tr>	
+</table>
+
+			<!-- ditels end -->
+
+<!-- counter star  -->
+<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" >
+			<tr>
+				<td valign="top" width="100%" align="center" style="background-image: url(https://i.postimg.cc/tgjkpSP2/bg-1.jpg);    background-size: cover;padding: 80px 0;">
+
+
+
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+					<tr>
+						<td valign="middle" width="25%" align="center" style="">
+						<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+							<span style="font-family: sans-serif;display: block;font-size: 34px;font-weight: 700;color: #fff;    margin-bottom: 25px;">9457</span>
+							<span style="font-family: sans-serif;color: rgba(255,255,255,.9);font-size: 13px;display: block;">Happy Customer</span>
+							</td>
+						</tr>		
+						</table>
+
+						</td>
+
+						<td valign="middle" width="25%" align="center" style="">
+						<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+							<span style="font-family: sans-serif;display: block;font-size: 34px;font-weight: 700;color: #fff;    margin-bottom: 25px;">20</span>
+							<span style="font-family: sans-serif;color: rgba(255,255,255,.9);font-size: 13px;display: block;">Years of Experienced</span>
+							</td>
+						</tr>		
+						</table>
+						</td>
+
+						<td valign="top" width="25%" align="center" style="">
+						<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+							<span style="font-family: sans-serif;display: block;font-size: 34px;font-weight: 700;color: #fff;    margin-bottom: 25px;">80</span>
+							<span style="font-family: sans-serif;color: rgba(255,255,255,.9);font-size: 13px;display: block;">Branches</span>
+							</td>
+						</tr>		
+						</table>
+						</td>
+
+						<td valign="top" width="25%" align="center" style="">
+						<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+							<span style="font-family: sans-serif;display: block;font-size: 34px;font-weight: 700;color: #fff;    margin-bottom: 25px;">980</span>
+							<span style="font-family: sans-serif;color: rgba(255,255,255,.9);font-size: 13px;display: block;">Staff</span>
+							</td>
+						</tr>		
+						</table>
+						</td>
+					</tr>		
+</table>
+
+				</td>
+					
+
+				
+			</tr>		
+</table>
+
+
+
+
+
+
+
+<!-- counter End  -->
+
+<!-- blog start -->
+<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="padding: 40px;display: block; background-color: #fff;" >
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+				<!-- table start -->
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="padding: 0 30px;display: block;" >
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+								<span style="font-family: sans-serif;font-size: 15px;color: rgba(0,0,0,.4);letter-spacing: 2px;
+								margin-bottom: 25px;display: inline-block;">BLOG</span>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+								<h2 style="font-family: sans-serif;font-size: 30px;color: #000000 !important;margin-top: 0;">Read Stories</h2>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" width="100%" align="center" style="">
+								<span style="font-family: sans-serif;font-size: 15px;line-height: 30px;color: rgba(0,0,0,.4);margin: 10px 0;
+								display: block;">A small river named Duden flows by their place and supplies it with the necessary regelialia.</span>
+							</td>
+						</tr>		
+					</table>
+					<!-- table end -->
+
+
+				</td>
+					
+
+				
+			</tr>
+
+
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+				<!-- table start -->
+				<table cellpadding="10" cellspacing="0" border="0" align="center" width="100%" >
+			<!-- tr start -->
+			<tr>
+				<td valign="top" style="">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="top" align="center" style="padding-top: 10px;">
+								<img src="https://i.postimg.cc/0Q0p1Wb7/blog-1.jpg" alt="" style="width: 100%;">
+							</td>
+						</tr>
+
+					</table>
+					<table cellpadding="0" cellspacing="0" border="0" align="left" width="100%" style="padding: 10px 10px 0 10px;   display: block;" >
+						<tr>
+							<td valign="top" align="left" >
+								<span style="font-family: sans-serif;font-size: 14px;color: rgba(0,0,0,.4);margin: 15px 0;display: block;
+    							line-height: 25px;">POSTED ON FEB 18, 2019 <span>FOOD </span></span>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top" align="left" >
+								<h2 style="font-family: sans-serif;font-size: 19px;margin-top: 0;">Healthy Foods For Kids</h2>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top" align="left" >
+								<span style="font-family: sans-serif;font-size: 15px;font-weight: 400 !important;color: rgba(0,0,0,.4);
+    							line-height: 30px;margin: 15px 0px;display: block;">Far far away, behind the word mountains, far from the countries</span>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top"  align="left">
+								<span><a  href="#" style="font-size: 15px;font-family: sans-serif;color: #fff;background: #f3a333;   text-decoration: none;padding: 10px 15px;border-radius: 30px">Read more</a></span>
+							</td>
+						</tr>
+					</table>
+
+				</td>
+				<td valign="top" style="">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="top" align="center" style="padding-top: 10px;">
+								<img src="https://i.postimg.cc/g0nzWnjs/blog-2.jpg" alt="" style="width:100%;">
+							</td>
+						</tr>
+
+					</table>
+					<table cellpadding="0" cellspacing="0" border="0" align="left" width="100%" style="padding: 10px 10px 0 10px;   display: block;" >
+						<tr>
+							<td valign="top"  align="left">
+								<span style="font-family: sans-serif;font-size: 14px;color: rgba(0,0,0,.4);margin: 15px 0;display: block;
+    							line-height: 25px;">POSTED ON FEB 18, 2019 FOOD</span>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top" align="left" >
+								<h2 style="font-family: sans-serif;font-size: 19px;margin-top: 0;">Healthy Foods For Kids</h2>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top" align="left" >
+								<span style="font-family: sans-serif;font-size: 15px;font-weight: 400 !important;color: rgba(0,0,0,.4);
+    							line-height: 30px;margin: 15px 0px;display: block;">Far far away, behind the word mountains, far from the countries</span>
+							</td>
+						</tr>
+
+						<tr>
+							<td valign="top" >
+								<span><a  href="#" style="font-size: 15px;font-family: sans-serif;color: #fff;background: #f3a333;   text-decoration: none;padding: 10px 15px;border-radius: 30px">Read more</a></span>
+							</td>
+						</tr>
+					</table>
+				</td>
+								
+			</tr>
+			<!-- tr end -->
+		
+			
+			
+		</table>
+
+				<!-- table end -->
+
+
+				</td>
+					
+
+				
+			</tr>	
+	
+
+
+</table>
+<!-- blog end -->
+
+
+<!-- Testimonial srtart -->
+<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="padding: 40px; display: block;" >
+			<tr>
+
+				<td valign="top" width="100%" align="center" style="">
+
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="padding: 0 30px;display: block;" >
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<span style="font-family: sans-serif;font-size: 15px;color: rgba(0,0,0,.4);margin-bottom: 20px;display: block;">SAYS</span>
+				</td>
+				
+			</tr>
+
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<h1 style="    font-family: sans-serif;font-size: 28px;margin-top: 0;line-height: 20px;">Testimonial</h1>
+				</td>
+				
+			</tr>
+
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<span style="font-family: sans-serif;font-size: 15px;font-weight: 400 !important;color: rgba(0,0,0,.4);
+					line-height: 30px;margin: 10px 0px;display: block;">A small river named Duden flows by their place and supplies it with the necessary regelialia.</span>
+				</td>
+				
+			</tr>		
+				</table>
+
+				</td>
+				
+			</tr>
+
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<!-- img table start -->
+
+					<table cellpadding="10" cellspacing="0" border="0" align="center" width="100%" >
+			<!-- tr start -->
+			<tr>
+				<td valign="top" style="padding-top: 20px;" >
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="top" align="center">
+								<img src="https://i.postimg.cc/bNq7W1sc/person-1.jpg" alt="" style="width: 100px;border-radius: 50%;
+								margin-bottom: 20px;">
+							</td>
+						</tr>
+
+					</table>
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+						<tr>
+							<td valign="top" align="center">
+								<h1 style="margin: 0;font-family: sans-serif;font-size: 20px;margin-bottom: 10px;">Ronald Tuff</h1>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top"align="center" >
+								<span style="font-family: sans-serif;font-size: 15px;line-height: 30px;color: rgba(0,0,0,.4);">Businessman</span>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top"align="center" >
+								<span style="font-family: sans-serif;font-size: 15px;font-weight: 400 !important;color: rgba(0,0,0,.4);
+					line-height: 30px;margin: 10px 0px;display: block;">Far far away, behind the word mountains, far from the countries</span>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top"align="center" >
+								<span><a href="#" style="font-size: 15px;font-family: sans-serif;color: #fff;background: #f3a333;   text-decoration: none;padding: 10px 15px;border-radius: 30px;margin: 5px 0;display: inline-block;">Read more</a></span>
+							</td>
+						</tr>
+					</table>
+
+				</td>
+				<td valign="top" style="padding-top: 20px">
+					<table  cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="">
+						<tr>
+							<td valign="top" align="center">
+								<img src="https://i.postimg.cc/P5xBrhWS/person-2.jpg" alt="" style="width: 100px;border-radius: 50%;
+								margin-bottom: 20px;">
+							</td>
+						</tr>
+
+					</table>
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+						<tr>
+							<td valign="top"align="center" >
+								<h1 style="margin: 0;font-family: sans-serif;font-size: 20px;margin-bottom: 10px;">Willam Clarson</h1>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" align="center">
+								<span style="font-family: sans-serif;font-size: 15px;line-height: 30px;color: rgba(0,0,0,.4);">Businessman</span>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top" align="center">
+								<span style="font-family: sans-serif;font-size: 15px;font-weight: 400 !important;color: rgba(0,0,0,.4);
+					line-height: 30px;margin: 10px 0px;display: block;">Far far away, behind the word mountains, far from the countries</span>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top"align="center" >
+								<span><a href="#" style="font-size: 15px;font-family: sans-serif;color: #fff;background: #f3a333;   text-decoration: none;padding: 10px 15px;border-radius: 30px;margin: 5px 0;display: inline-block;">Read more</a></span>
+							</td>
+						</tr>
+					</table>
+				</td>
+								
+			</tr>
+			<!-- tr end -->
+		
+			
+			
+		</table>
+					<!-- img table start -->
+				</td>
+					
+
+				
+			</tr>		
+	</table>
+
+
+
+<!-- Testimonial end -->
+<!-- footer start -->
+<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="padding: 40px;
+display: block;background-color:#000;">
+			<tr>
+				<td valign="top" width="100%" align="center" style="">
+					<table cellpadding="0" cellspacing="0" border="0" align="left" width="100%" >
+						<tr>
+						<td valign="top" width="33.33%" align="left" style="padding-top: 20px">
+								<table cellpadding="0" cellspacing="0" border="0" align="left" width="100%" >
+									<tr>
+										<td valign="top" width="100%" align="left" style="padding-right:10px;">
+										<h1 style="font-family: sans-serif;font-size: 20px;font-weight: 700;  color: #ffff !important;margin-top: 0;margin-bottom: 20px;
+										    display: block;">QUIK CHICKEN</h1>
+										</td>
+				
+									</tr>
+									<tr>
+										<td valign="top" width="100%" align="left" style="">
+										<span style="color: rgba(255,255,255,.5);font-family: sans-serif;
+											font-size: 16px;line-height: 30px;margin: 15px 0;display: block;">A small river named Duden flows by their place and supplies it with the necessary regelialia.</span>
+										</td>
+				
+									</tr>		
+								</table>
+
+						</td>
+
+						<td valign="top" width="33.33%" align="left" style="padding-top: 20px">
+							<table cellpadding="0" cellspacing="0" border="0" align="left" width="100%" style="padding: 0 5px;display: block;" >
+									<tr>
+										<td valign="top" width="100%" align="left" style="">
+											<h1 style="font-family: sans-serif;font-size: 20px;font-weight: 700;  color: #ffff !important;margin-top: 0;margin-bottom: 20px;
+										    display: block;">Contact Info</h1>
+										</td>
+										
+									</tr>	
+									<tr>
+										<td valign="top" width="100%" align="left" style="">
+											<span style="color: rgba(255,255,255,.5);font-family: sans-serif;
+											font-size: 16px;line-height: 30px;margin: 15px 0 10px;
+    display: block;">203 Fake St. Mountain View, San Francisco, California, USA</span>
+										</td>
+										
+									</tr>
+									<tr>
+										<td valign="top" width="100%" align="left" style="">
+											<span style="color: rgba(255,255,255,.5);font-family: sans-serif;
+											font-size: 16px;">+2 392 3929 210</span>
+										</td>
+										
+									</tr>	
+							</table>
+						</td>
+
+						<td valign="top" width="33.33%" align="left" style="padding-top: 20px;">
+						<table cellpadding="0" cellspacing="0" border="0" align="left" width="100%" style="padding-left: 10px;display: block;" >
+									<tr>
+										<td valign="top" width="100%" align="left" style="">
+											<h1 style="font-family: sans-serif;font-size: 20px;font-weight: 700;  color: #ffff !important;margin-top: 0;margin-bottom: 40px;
+										    display: block;">Useful Links</h1>
+											<ul style="margin: 0;padding: 0;">
+
+
+												<li style="list-style: none;margin-bottom: 15px;display: block;"><a href="#" style=" font-weight: 600; text-decoration: none;color: rgba(255,255,255,1) !important;
+												font-size: 15px;text-transform: capitalize;">breakfast</a></li>
+												<li style="list-style: none;margin-bottom: 15px;display: block;"><a href="#" style=" font-weight: 600; text-decoration: none;color: rgba(255,255,255,1) !important;
+												font-size: 15px;text-transform: capitalize;">lunch</a></li>
+												<li style="list-style: none;margin-bottom: 15px;display: block;"><a href="#" style=" font-weight: 600; text-decoration: none;color: rgba(255,255,255,1) !important;
+												font-size: 15px;text-transform: capitalize;">dinner</a></li>
+												<li style="list-style: none;margin-bottom: 15px;display: block;"><a href="#" style=" font-weight: 600; text-decoration: none;color: rgba(255,255,255,1) !important;
+												font-size: 15px;text-transform: capitalize;">dessert</a></li>
+												
+												
+											</ul>
+										</td>
+									</tr>		
+						</table>
+						</td>
+
+
+
+					
+
+				
+						</tr>		
+					</table>
+
+				</td>
+		
+			</tr>		
+</table>
+
+<!-- 2nd part start -->
+<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="background-color: #000;
+    padding: 40px;display: block;" >
+			<tr>
+				<td valign="top" width="33.33%" align="left" style="">
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" >
+								<tr>
+									<td valign="top" width="100%" align="left" style="">
+										<span style="font-family: sans-serif;font-size: 16px;line-height: 25px;
+										color: rgba(255,255,255,.4);">© 2018 Restobar. All Rights Reserved</span>
+										
+									</td>
+									
+								</tr>		
+					</table>
+				</td>
+
+				<td valign="top" width="33.33%" align="right" style="">
+					<table cellpadding="0" cellspacing="0" border="0" align="right" width="100%" >
+								<tr>
+									<td valign="top" width="100%" align="right" style="">
+										<span><a href="#" style="font-family: sans-serif;font-size: 15px;   text-decoration: none; color: rgba(255,255,255,.4);">Unsubcribe</a></span>
+									</td>
+									
+								</tr>		
+					</table>
+				</td>
+					
+
+				
+			</tr>		
+</table>
+
+
+<!-- 2nd part start -->
+
+
+<!-- footer End -->
+
+
+
+
+
+
+	
+		<!-- code end here  -->
+		</td>
+	</tr>
+	</table>
+	<!-- End of wrapper table -->
+</body>
+</html>
